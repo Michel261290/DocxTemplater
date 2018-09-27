@@ -63,9 +63,9 @@ var DocxReader = function(){
     };
 
     this.ReplaceVariable = function(variables){
-        this.docxtemplater = setData(variables);
+        this.docxtemplater.setData(variables);
         this.docxtemplater.render();
-
+        
         // Update object
         this.zipContent = this.docxtemplater.getZip();
         var documentxml = this.zipContent.file("word/document.xml");

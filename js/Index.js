@@ -28,25 +28,17 @@ $("#fileUpload").on('change', function () {
 
         // Cambiar variables en documento
         var docxvar = {
-            "nombre": "Este es un texto que contiene la varibale nombre"
+            "nombre": "Jhon",
+            "apellidoPaterno": "Lopez",
+            "apellidoMaterno": "Gomez",
+            "telefono": "556454664",
+            "direccion": "Santa Rosalia 201",
+
         };
 
-        docx.docxtemplater.setData(docxvar);
-
-        try {
-            // renderiza el documento con las variables nuevas
-            docx.docxtemplater.render();
-        }
-        catch (error) {
-            var e = {
-                message: error.message,
-                name: error.name,
-                stack: error.stack,
-                properties: error.properties,
-            }
-            console.log(JSON.stringify({ error: e }));
-            throw error;
-        }
+        //remplaza variables recibiendo JSON como entrada
+        docx.ReplaceVariable(docxvar);
+     
 
         // Asigna un nombre al archivo de salida
         docx.SetName("Plantilla.docx")
