@@ -13,7 +13,7 @@ $("#fileUpload").on('change', function () {
     }
 
     var url = URL.createObjectURL($("#fileUpload").get(0).files[0]);
-    
+
     var docx = new DocxReader();
 
     docx.Load(url, function () {
@@ -57,7 +57,7 @@ function getBase64(file) {
     var reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function (result) {
-        base64aFile(result.target.result, nameFile);
+        getFile(result.target.result, nameFile);
     };
     reader.onerror = function (error) {
         console.log('Error: ', error);
@@ -65,12 +65,22 @@ function getBase64(file) {
 }
 
 //Obtiene un file a partir de un base64
-function base64aFile(dataurl, filename) {
+function getFile(dataurl, filename) {
     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
         bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
     while (n--) {
         u8arr[n] = bstr.charCodeAt(n);
     }
     var file = new File([u8arr], filename, { type: mime });
-    return file;
+
+    var docx = new DocxReader();
+    setTimeout(function(){
+        var url = URL.createObjectURL(file);
+        docx.Load(url, function () {
+            docx.SetName(filename)
+            docx.Download();
+        });
+    },1500);
+    
+    
 }
