@@ -1,27 +1,27 @@
 
-var DocxReader = function(){  
+var DocxReader = function () {
     // Var
     this.url = "";
     this.error = null;
     this.zipContent = null;
-    
+
     this.file = {
-        contentAsString : null,
-        contentAsXml : null
+        contentAsString: null,
+        contentAsXml: null
     };
     this.docxtemplater = null;
     this.name = "output.docx";
 
     // Methods
-    this.Load = function(url, loaded){
+    this.Load = function (url, loaded) {
         this.url = url;
 
         var splitUrl = this.url.split('/');
         this.name = splitUrl[splitUrl.length - 1];
 
         var docThis = this;
-        JSZipUtils.getBinaryContent(this.url, function(error,content){
-            if(error){
+        JSZipUtils.getBinaryContent(this.url, function (error, content) {
+            if (error) {
                 docThis.error = error;
                 return;
             }
@@ -39,17 +39,24 @@ var DocxReader = function(){
         });
     };
 
-    this.Search = function (txt){
+    this.Search = function (txt) {
         var lowerCaseTxt = txt.toLowerCase();
         var innerDocument = this.file.contentAsXml.find('w\\:body').text().toLowerCase();
-        if(innerDocument.indexOf(lowerCaseTxt) != -1){
+        if (innerDocument.indexOf(lowerCaseTxt) != -1) {
             return true;
         }
 
         return false;
     };
 
-    this.Replace = function(oldtxt, newtxt){
+
+    this.GetVariables = function () {
+        var innerDocument = this.file.contentAsXml.find('w\\:body').text();
+        var variables = innerDocument.match(/{[a-z_a-z_a-z]{1,25}}/g);
+        return variables;
+    };
+
+    this.Replace = function (oldtxt, newtxt) {
         // Be careful, it will look in all the xml as text.
         // Don't replace tags otherwise your docx will not work anymore !
         var oldContent = this.file.contentAsString;
@@ -62,10 +69,10 @@ var DocxReader = function(){
         this.file.contentAsXml = $(newContent);
     };
 
-    this.ReplaceVariable = function(variables){
+    this.ReplaceVariable = function (variables) {
         this.docxtemplater.setData(variables);
         this.docxtemplater.render();
-        
+
         // Update object
         this.zipContent = this.docxtemplater.getZip();
         var documentxml = this.zipContent.file("word/document.xml");
@@ -74,16 +81,16 @@ var DocxReader = function(){
         this.file.contentAsXml = $(strDocumentxml);
     };
 
-    this.SetName = function(name){
+    this.SetName = function (name) {
         this.name = name;
     };
 
-    this.Download = function(){
+    this.Download = function () {
         var out = this.docxtemplater.getZip().generate({
-            type:"blob",
+            type: "blob",
             mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        }) 
-        saveAs(out,this.name);
+        })
+        saveAs(out, this.name);
     };
 
 }

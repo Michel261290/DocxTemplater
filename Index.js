@@ -13,7 +13,7 @@ $("#fileUpload").on('change', function () {
     }
 
     var url = URL.createObjectURL($("#fileUpload").get(0).files[0]);
-    
+
 
     var docx = new DocxReader();
 
@@ -26,14 +26,18 @@ $("#fileUpload").on('change', function () {
         // Remplazar Texto
         docx.Replace("Texto", "Este Texto Fue Cambiado Desde JS");
 
+        var variables = docx.GetVariables();
+
+        console.log(variables);
+
 
         // Cambiar variables en documento
         var docxvar = {
-            "nombre": "Ofirtz",
-            "apellidoPaterno": "Garcia",
-            "apellidoMaterno": "Gomez",
-            "telefono": "556454664",
-            "direccion": "Santa Rosalia 201",
+            "fecha": "99/99/9999",
+            "hora": "00:00",
+            "oficina": "0001",
+            "codigo_centro": "0320",
+            "saldo_inicial_caja": "10,000.00",
 
         };
 
@@ -45,8 +49,8 @@ $("#fileUpload").on('change', function () {
         docx.SetName("Plantilla.docx")
 
         // Descarga el documento
-        docx.Download();
-        $("#fileUpload").val("");
+        // docx.Download();
+        // $("#fileUpload").val("");
     });
 
 });
@@ -75,13 +79,13 @@ function getFile(base64, filename) {
     var file = new File([u8arr], filename, { type: mime });
 
     var docx = new DocxReader();
-    setTimeout(function(){
+    setTimeout(function () {
         var url = URL.createObjectURL(file);
         docx.Load(url, function () {
             docx.SetName(filename)
             docx.Download();
         });
-    },1500);
-    
-    
+    }, 1500);
+
+
 }
