@@ -20,26 +20,45 @@ $("#fileUpload").on('change', function () {
     docx.Load(url, function () {
 
         // Buscar Texto
-        var found = docx.Search("first"); // Regresa True/False
+        // var found = docx.Search("first"); // Regresa True/False
 
 
         // Remplazar Texto
-        docx.Replace("Texto", "Este Texto Fue Cambiado Desde JS");
+        //docx.Replace("Texto", "Este Texto Fue Cambiado Desde JS");
 
-        var variables = docx.GetVariables();
+        //var variables = docx.GetVariables();
 
-        console.log(variables);
+        // console.log(variables);
 
 
         // Cambiar variables en documento
-        var docxvar = {
-            "fecha": "99/99/9999",
-            "hora": "00:00",
-            "oficina": "0001",
-            "codigo_centro": "0320",
-            "saldo_inicial_caja": "10,000.00",
+        // var docxvar = {
+        //     "fecha": "99/99/9999",
+        //     "hora": "00:00",
+        //     "oficina": "0001",
+        //     "codigo_centro": "0320",
+        //     "saldo_inicial_caja": "10,000.00",
 
-        };
+        // };
+
+        var docxvar = {
+            "data": [
+                {
+                    "fecha": "99/99/9999",
+                    "hora": "00:00",
+                    "oficina": "0001",
+                    "codigo_centro": "0320",
+                    "saldo_inicial_caja": "10,000.00"
+                },
+                {
+                    "fecha": "99/99/9999",
+                    "hora": "00:00",
+                    "oficina": "0001",
+                    "codigo_centro": "0320",
+                    "saldo_inicial_caja": "10,000.00"
+                }
+            ]
+        }
 
         //remplaza variables recibiendo JSON como entrada
         docx.ReplaceVariable(docxvar);
@@ -49,8 +68,8 @@ $("#fileUpload").on('change', function () {
         docx.SetName("Plantilla.docx")
 
         // Descarga el documento
-        // docx.Download();
-        // $("#fileUpload").val("");
+        docx.Download();
+        $("#fileUpload").val("");
     });
 
 });
