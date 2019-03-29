@@ -1,0 +1,4 @@
+los delimitadores se encuentran 
+en el archivo de docxtemplater.lastet.min.js
+se encuentra como delimiters se cambiaron de 
+{} oficial, a los que requeria bansefi 

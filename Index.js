@@ -20,11 +20,11 @@ $("#fileUpload").on('change', function () {
     docx.Load(url, function () {
 
         // Buscar Texto
-        // var found = docx.Search("first"); // Regresa True/False
-
+        // var found = docx.Search("«VARIOS_REPRESENTANTES_COLUM1»"); // Regresa True/False
+        // console.log(found);
 
         // Remplazar Texto
-        //docx.Replace("Texto", "Este Texto Fue Cambiado Desde JS");
+        //  docx.Replace("«VARIOS_REPRESENTANTES_COLUM1»", "Hola<w:br/>Mundo");
 
         //var variables = docx.GetVariables();
 
@@ -32,33 +32,49 @@ $("#fileUpload").on('change', function () {
 
 
         // Cambiar variables en documento
-        // var docxvar = {
-        //     "fecha": "99/99/9999",
-        //     "hora": "00:00",
-        //     "oficina": "0001",
-        //     "codigo_centro": "0320",
-        //     "saldo_inicial_caja": "10,000.00",
-
-        // };
-
         var docxvar = {
-            "data": [
-                {
-                    "fecha": "99/99/9999",
-                    "hora": "00:00",
-                    "oficina": "0001",
-                    "codigo_centro": "0320",
-                    "saldo_inicial_caja": "10,000.00"
-                },
-                {
-                    "fecha": "99/99/9999",
-                    "hora": "00:00",
-                    "oficina": "0001",
-                    "codigo_centro": "0320",
-                    "saldo_inicial_caja": "10,000.00"
-                }
-            ]
-        }
+            "num_ac_prop": "99/99/9999",
+            "fec_formalizacion": "00:00",
+            "num_ofic_ac_prop": "0001",
+            "nomb_ofic_ac_prop": "0320",
+            "nomb_completo_titular": "10,000.00",
+
+        };
+
+        // var docxvar = {
+        //     "data": [
+        //         {
+        //             "VARIOS_REPRESENTANTES_COLUM1": "Rodolfo Sosa Guzman"
+
+        //         },
+        //         {
+        //             "VARIOS_REPRESENTANTES_COLUM1": "Juan Diaz Covarrubias"
+
+        //         },
+        //         {
+        //             "VARIOS_REPRESENTANTES_COLUM1": "Rodolfo Lopez"
+
+        //         },
+        //         {
+        //             "VARIOS_REPRESENTANTES_COLUM1": "Juan Diaz Clara"
+
+        //         }
+        //     ]
+        // }
+        
+        // var textoSustituir = "";
+        // for (var i = 0; i < docxvar.data.length; i++) {
+
+        //     if (i == docxvar.data.length - 1) {
+        //         textoSustituir += docxvar.data[i].VARIOS_REPRESENTANTES_COLUM1;
+        //     } else {
+        //         textoSustituir += docxvar.data[i].VARIOS_REPRESENTANTES_COLUM1+"<w:br/>"
+        //     }
+        // }
+
+        // console.log(textoSustituir);
+        // docx.Replace("«VARIOS_REPRESENTANTES_COLUM1»", textoSustituir);
+
 
         //remplaza variables recibiendo JSON como entrada
         docx.ReplaceVariable(docxvar);
